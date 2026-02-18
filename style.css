@@ -15,11 +15,11 @@ header {
     display: flex;
 }
 
-#filterTwo, #filterThree {
+#filter-two, #filter-three {
     padding-left: 32px;
 }
 
- #filterThree > p{
+ #filter-three > p{
     font-family: Arial, Helvetica, sans-serif;
     font-size: x-small;
     color: gray;
@@ -29,6 +29,14 @@ header {
     height: 49.6px;
     border-radius: 5px;
     border-color: gray;
+}
+
+#country_cards_container {
+    padding: 0px, 32px, 32px, 32px;
+}
+
+#show-more-btn{
+    
 }
 
 

@@ -12,21 +12,24 @@
         <h1>Country Explorer</h1>
     </header>
     <form id="filters">
-        <div class="filter_input" id="filterOne">
+        <div class="filter_input" id="filter-one">
             Search by Country Name:<br/>
             <input type="text" id="search-input" placeholder="Enter Country Name">
         </div>
-        <div class="filter_input" id="filterTwo">
+        <div class="filter_input" id="filter-two">
             Select a Region:<br/>
             <select id="region-select"></select>
         </div>
-        <div class="filter_input" id="filterThree">
+        <div class="filter_input" id="filter-three">
             Search by Population:<br/>
             <input type="number" id="population-input" min="0" max="1500000000" placeholder="0" step="10000">
             <p>Max - 1.5 Billion (1500000000)</p>
         </div>
     </form>
-    <div id="country-cards-container"></div>
+    <div id="country-cards-container">
+
+        <button id="show-more-btn">Show More</button>
+    </div>
     <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
