@@ -11,6 +11,21 @@
         <img src=".\assets\world.png" alt="Country Explorer Logo">
         <h1>Country Explorer</h1>
     </header>
+    <form id="filters">
+        <div class="filter_input" id="filterOne">
+            Search by Country Name:<br/>
+            <input type="text" id="search-input" placeholder="Enter Country Name">
+        </div>
+        <div class="filter_input" id="filterTwo">
+            Select a Region:<br/>
+            <select id="region-select"></select>
+        </div>
+        <div class="filter_input" id="filterThree">
+            Search by Population:<br/>
+            <input type="number" id="population-input" min="0" max="1500000000" placeholder="0" step="10000">
+            <p>Max - 1.5 Billion (1500000000)</p>
+        </div>
+    </form>
     <div id="country-cards-container"></div>
     <script src="data.js"></script>
     <script src="script.js"></script>

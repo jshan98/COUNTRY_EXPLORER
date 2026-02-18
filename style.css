@@ -10,3 +10,25 @@ header {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+#filters {
+    padding: 32px;
+    display: flex;
+}
+
+#filterTwo, #filterThree {
+    padding-left: 32px;
+}
+
+ #filterThree > p{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: x-small;
+    color: gray;
+}
+
+.filter_input > input, .filter_input > select{
+    height: 49.6px;
+    border-radius: 5px;
+    border-color: gray;
+}
+
+
