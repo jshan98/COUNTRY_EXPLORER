@@ -60,6 +60,8 @@ span {
 
 .country-card > img {
     padding-top: 28.8px;
+    padding-left: 32px;
+    padding-right: 32px;
     width: 200px;
     height: 105px;
 }
