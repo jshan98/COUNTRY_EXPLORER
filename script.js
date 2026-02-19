@@ -1,5 +1,5 @@
 // Listend for the DOMContentLoaded event to trigger the populateCards function.
-document.addEventListener("DOMContentLoaded", populateCards);
+document.addEventListener("DOMContentLoaded", populateCountryCards);
 
 /**
  * Function: populateCards
@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", populateCards);
  * If the length is not 0, then the function creates the country cards and their elements.
  * Which then populates the page .
  */
-function populateCards() {
+function populateCountryCards() {
     document.getElementById("country-cards-container") .innerHTML= "";
     let countryCardsContainer = document.getElementById("country-cards-container");
     let displayCount = 12
