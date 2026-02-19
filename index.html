@@ -18,7 +18,9 @@
         </div>
         <div class="filter_input" id="filter-two">
             Select a Region:<br/>
-            <select id="region-select"></select>
+            <select id="region-select">
+                <option value="" disabled selected hidden>All Regions</option>
+            </select>
         </div>
         <div class="filter_input" id="filter-three">
             Search by Population:<br/>
@@ -28,8 +30,8 @@
     </form>
     <div id="country-cards-container">
 
-        <button id="show-more-btn">Show More</button>
     </div>
+    <button id="show-more-btn">Show More</button>
     <script src="data.js"></script>
     <script src="script.js"></script>
 </body>

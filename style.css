@@ -10,6 +10,10 @@ header {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+body {
+    background-color: #f3f3f3;
+}
+
 #filters {
     padding: 32px;
     display: flex;
@@ -31,12 +35,36 @@ header {
     border-color: gray;
 }
 
-#country_cards_container {
-    padding: 0px, 32px, 32px, 32px;
+#country-cards-container {
+    margin: 0px, 32px, 32px, 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
 }
 
 #show-more-btn{
-    
+    height: 38.4px;
 }
 
+span {
+    font-weight: bold;
+}
+
+.country-card {
+    width: 1fr;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    background-color: #e0e0e0;
+}
+
+.country-card > img {
+    padding-top: 28.8px;
+    width: 200px;
+    height: 105px;
+}
+
+.country-card > p, .country-card > h2 {
+    padding-left: 21.5px;
+}
 
