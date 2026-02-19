@@ -8,10 +8,30 @@
 </head>
 <body>
     <header>
-        <img src=".\assets\world.png">
+        <img src=".\assets\world.png" alt="Country Explorer Logo">
         <h1>Country Explorer</h1>
     </header>
-    <div id="country-cards-container"></div>
+    <form id="filters">
+        <div class="filter_input" id="filter-one">
+            Search by Country Name:<br/>
+            <input type="text" id="search-input" placeholder="Enter Country Name">
+        </div>
+        <div class="filter_input" id="filter-two">
+            Select a Region:<br/>
+            <select id="region-select">
+                <option value="" disabled selected hidden>All Regions</option>
+            </select>
+        </div>
+        <div class="filter_input" id="filter-three">
+            Search by Population:<br/>
+            <input type="number" id="population-input" min="0" max="1500000000" placeholder="0" step="10000">
+            <p>Max - 1.5 Billion (1500000000)</p>
+        </div>
+    </form>
+    <div id="country-cards-container">
+
+    </div>
+    <button id="show-more-btn">Show More</button>
     <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
