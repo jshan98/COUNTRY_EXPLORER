@@ -1,15 +1,25 @@
+var countryCount = 12; // limits how many country cards are displayed at a given time
+var filteredCountries = data; // Contains the array of countries
 // Listens for the DOMContentLoaded event to trigger the populateCards function.
-document.addEventListener("DOMContentLoaded", populateCountryCards(data, 12));
+document.addEventListener("DOMContentLoaded", populateCountryCards(filteredCountries, countryCount)); // Listens for the loading of the DOM content and calls populateCountryCards
 
-var searchInput = document.getElementById("search-input");
-var regionInput = document.getElementById("region-select");
-var populationInput = document.getElementById("population-input");
-searchInput.addEventListener("input", filterData);
-regionInput.addEventListener("change", filterData);
-populationInput.addEventListener("input", filterData);
+var searchInput = document.getElementById("search-input"); // Holds the name search bar element
+var regionInput = document.getElementById("region-select"); // Holds the region select drop down element
+var populationInput = document.getElementById("population-input"); // Holds the population search bar element
+var showMorePressed = document.getElementById("show-more-btn"); // Holds the show more button element
+searchInput.addEventListener("input", filterData); // Listens for the input in the name search bar and calls filterData
+regionInput.addEventListener("change", filterData); // Listens for the changing of the selected region and calls filterData
+populationInput.addEventListener("input", filterData); // Listens for the input in the population search bar and calls filterData
+showMorePressed.addEventListener("click", showMoreHandler); // Listens for the clicking of the show more button and calls showMoreHandler
 
+/**
+ * Function: showMoreHandler
+ * Description: Increments the total number of country cards to be displayed at a given time and calls the populateCountryCards function
+ * to update the user display.
+ */
 function showMoreHandler(){
-
+    countryCount+=12;
+    populateCountryCards(filteredCountries, countryCount);
 }
 
 /**
@@ -18,11 +28,10 @@ function showMoreHandler(){
  * Description: This function filters the data (By calling applyFiltersSearch & applyFiltersNoSearch) 
  * before calling and passing the filtered data to populateCards. If the inputs are invalid then filterData
  * will use helper methods (showErrorMessage & hideErrorMessage) to display the associated error message to notify the
- * user.
+ * user. Resets the countryCount back to 12 when filters are applied to keep the show more button relevent.
  * @returns none (void)
  */
 function filterData(){
-    let filteredCountries = [];
     let regex = new RegExp (/^[a-zA-Z -]*$/);
     if (!regex.test (searchInput.value) && !stringIsBlank(searchInput.value)){
         console.log("Enter valid Country Name");
@@ -33,17 +42,19 @@ function filterData(){
         filteredCountries = applyFiltersSearch(searchInput.value.toLowerCase(), isAllRegions(regionInput.value), regionInput.value, populationInput.valueAsNumber);
         hideErrorMessage("name-error");
         hideErrorMessage("pop-error");
+        countryCount = 12;
     } else if (stringIsBlank(searchInput.value) && populationIsValid(populationInput.valueAsNumber)){
         console.log("2- I found the input: " + populationInput.valueAsNumber);
         filteredCountries = applyFiltersNoSearch(isAllRegions(regionInput.value), regionInput.value, populationInput.valueAsNumber);
         hideErrorMessage("name-error");
         hideErrorMessage("pop-error");
+        countryCount = 12;
     } else {
         console.log("Invalid population number");
         showErrorMessage("pop-error");
         return false;
     }
-    populateCountryCards(filteredCountries, 12);
+    populateCountryCards(filteredCountries, countryCount);
 }
 
 /**
