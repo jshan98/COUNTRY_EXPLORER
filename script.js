@@ -12,27 +12,52 @@ populationInput.addEventListener("input", filterData);
  * Function: filterData
  * @param none
  * Description: This function filters the data (By calling applyFiltersSearch & applyFiltersNoSearch) 
- * before calling and passing the filtered data to populateCards.
+ * before calling and passing the filtered data to populateCards. If the inputs are invalid then filterData
+ * will use helper methods (showErrorMessage & hideErrorMessage) to display the associated error message to notify the
+ * user.
  * @returns none (void)
  */
 function filterData(){
     let filteredCountries = [];
     let regex = new RegExp (/^[a-zA-Z -]*$/);
     if (!regex.test (searchInput.value) && !stringIsBlank(searchInput.value)){
-        console.log("Enter valid Country Name.");
+        console.log("Enter valid Country Name");
+        showErrorMessage("name-error");
         return false;
-    } else if (!stringIsBlank(searchInput.value)){
+    } else if (!stringIsBlank(searchInput.value) && populationIsValid(populationInput.valueAsNumber)){
         console.log("1- I found the input: " + searchInput.value);
         filteredCountries = applyFiltersSearch(searchInput.value.toLowerCase(), isAllRegions(regionInput.value), regionInput.value, populationInput.valueAsNumber);
-        populateCountryCards(filteredCountries, filteredCountries.length);
-    } else if (stringIsBlank(searchInput.value)){
+        hideErrorMessage("name-error");
+        hideErrorMessage("pop-error");
+    } else if (stringIsBlank(searchInput.value) && populationIsValid(populationInput.valueAsNumber)){
         console.log("2- I found the input: " + populationInput.valueAsNumber);
         filteredCountries = applyFiltersNoSearch(isAllRegions(regionInput.value), regionInput.value, populationInput.valueAsNumber);
-    } else if (populationInput.valueAsNumber > 1500000000){
+        hideErrorMessage("name-error");
+        hideErrorMessage("pop-error");
+    } else {
         console.log("Invalid population number");
+        showErrorMessage("pop-error");
         return false;
     }
-    populateCountryCards(filteredCountries, filteredCountries.length);
+    populateCountryCards(filteredCountries, 12);
+}
+
+/**
+ * Function: showErrorMessage
+ * @param {*} errorElement 
+ * Description: Shows the error message by changing the hidden boolean value to false.
+ */
+function showErrorMessage(errorElement){
+    document.getElementById(errorElement).hidden = false;
+}
+
+/**
+ * Function: hideErrorMessage
+ * @param {*} errorElement
+ * Description: Hides the error message by changing the hidden boolean value to true.
+ */
+function hideErrorMessage(errorElement){
+    document.getElementById(errorElement).hidden = true;
 }
 
 /**
@@ -123,6 +148,20 @@ function isAllRegions(regionSelection) {
 }
 
 /**
+ * Function: populationIsValid
+ * @param {*} population 
+ * Description: Checks if the population value entered is valid or not then returns true or false.
+ * @returns boolean value (true or false)
+ */
+function populationIsValid(population){
+    if (population <= 1500000000){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
  * Function: populateCards
  * Params: countriesArray, total
  * Description: Checks whether the countries array has a length of 0.
@@ -142,6 +181,9 @@ function populateCountryCards(countriesArray, total) {
     */
     if(countries.length == 0){
         console.log("No countries found");
+        let nothingFound = document.createElement("h4");
+        nothingFound.innerHTML = "No countries found";
+        countryCardsContainer.appendChild(nothingFound);
     } else {
         let loopCounter = displayCount;
         for (let loop = 0; loop < loopCounter; loop++){
