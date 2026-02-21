@@ -8,6 +8,10 @@ searchInput.addEventListener("input", filterData);
 regionInput.addEventListener("change", filterData);
 populationInput.addEventListener("input", filterData);
 
+function showMoreHandler(){
+
+}
+
 /**
  * Function: filterData
  * @param none
@@ -174,6 +178,7 @@ function populateCountryCards(countriesArray, total) {
     let countryCardsContainer = document.getElementById("country-cards-container");
     let displayCount = total;
     let countries = countriesArray;
+    let showMoreBtn = document.getElementById("show-more-btn");
 
     /* 
     First checks if the length of the containers array is 0.
@@ -240,6 +245,12 @@ function populateCountryCards(countriesArray, total) {
 
             // Append each new country card to the countryCardContainer
             countryCardsContainer.appendChild(newCard);
+
+            if(countriesArray.length - displayCount > 0){
+                showMoreBtn.hidden = false;
+            } else {
+                showMoreBtn.hidden = true;
+            }
         }
     }
 }
