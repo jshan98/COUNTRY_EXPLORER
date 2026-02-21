@@ -1,18 +1,140 @@
-// Listend for the DOMContentLoaded event to trigger the populateCards function.
-document.addEventListener("DOMContentLoaded", populateCountryCards);
+// Listens for the DOMContentLoaded event to trigger the populateCards function.
+document.addEventListener("DOMContentLoaded", populateCountryCards(data, 12));
+
+var searchInput = document.getElementById("search-input");
+var regionInput = document.getElementById("region-select");
+var populationInput = document.getElementById("population-input");
+searchInput.addEventListener("input", filterData);
+regionInput.addEventListener("change", filterData);
+populationInput.addEventListener("input", filterData);
+
+/**
+ * Function: filterData
+ * @param none
+ * Description: This function filters the data (By calling applyFiltersSearch & applyFiltersNoSearch) 
+ * before calling and passing the filtered data to populateCards.
+ * @returns none (void)
+ */
+function filterData(){
+    let filteredCountries = [];
+    let regex = new RegExp (/^[a-zA-Z -]*$/);
+    if (!regex.test (searchInput.value) && !stringIsBlank(searchInput.value)){
+        console.log("Enter valid Country Name.");
+        return false;
+    } else if (!stringIsBlank(searchInput.value)){
+        console.log("1- I found the input: " + searchInput.value);
+        filteredCountries = applyFiltersSearch(searchInput.value.toLowerCase(), isAllRegions(regionInput.value), regionInput.value, populationInput.valueAsNumber);
+        populateCountryCards(filteredCountries, filteredCountries.length);
+    } else if (stringIsBlank(searchInput.value)){
+        console.log("2- I found the input: " + populationInput.valueAsNumber);
+        filteredCountries = applyFiltersNoSearch(isAllRegions(regionInput.value), regionInput.value, populationInput.valueAsNumber);
+    } else if (populationInput.valueAsNumber > 1500000000){
+        console.log("Invalid population number");
+        return false;
+    }
+    populateCountryCards(filteredCountries, filteredCountries.length);
+}
+
+/**
+ * Function: applayFiltersNoSearch
+ * @param {*} allRegions 
+ * @param {*} regionIn 
+ * @param {*} populationIn 
+ * Description: Filters for results that do not have a search parameter based on allRegions(boolean),
+ * regionIn(selection), populationIn(integer value).
+ * @returns filtered array
+ */
+function applyFiltersNoSearch(allRegions, regionIn, populationIn){
+    let filtered = [];
+    if(allRegions){
+        for(let index = 0; index < data.length; index++){
+            if(data[index].population >= populationIn) {
+                filtered.push(data[index]);
+            }
+        }
+    } else {
+        for(let index = 0; index < data.length; index++){
+            if(data[index].region == regionIn && data[index].population >= populationIn) {
+                filtered.push(data[index]);
+            }
+        }
+    }
+    return filtered;
+}
+
+/**
+ * Function: applyFiltersSearch
+ * @param {*} searchIn 
+ * @param {*} allRegions 
+ * @param {*} regionIn 
+ * @param {*} populationIn
+ * Description: Filters for results that have a search parameter based on the searchIn(string value), allRegions(boolean),
+ * regionIn (selection), and populationIn(integer value). 
+ * @returns filtered array
+ */
+function applyFiltersSearch(searchIn, allRegions, regionIn, populationIn){
+    let filtered = [];
+    if(allRegions){
+        for(let index = 0; index < data.length; index++){
+            if(data[index].name.official.toLowerCase().includes(searchIn) && data[index].population >= populationIn) {
+                filtered.push(data[index]);
+            }
+        }
+    } else {
+        for(let index = 0; index < data.length; index++){
+            if(data[index].name.official.toLowerCase().includes(searchIn)) {
+                if(data[index].region == regionIn && data[index].population >= populationIn){
+                    filtered.push(data[index]);
+                }
+            }
+        }
+    }
+    return filtered;
+}
+
+/**
+ * Function: stringIsBlank
+ * @param {*} string 
+ * Description: Checks whether the passes string value is blank or not then returns true or false.
+ * @returns boolean value (true or false)
+ */
+function stringIsBlank(string){
+    if(string.length == 0){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+/**
+ * Function: isAllRegions
+ * @param {*} regionSelection
+ * Description: Checks if region selection is set to all regions or not then returns true or false. 
+ * @returns boolean value (true or false)
+ */
+function isAllRegions(regionSelection) {
+    if(regionSelection == "All Regions"){
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 
 /**
  * Function: populateCards
- * Params: None
+ * Params: countriesArray, total
  * Description: Checks whether the countries array has a length of 0.
  * If the length is not 0, then the function creates the country cards and their elements.
  * Which then populates the page .
+ * @returns none (void)
  */
-function populateCountryCards() {
+function populateCountryCards(countriesArray, total) {
     document.getElementById("country-cards-container") .innerHTML= "";
     let countryCardsContainer = document.getElementById("country-cards-container");
-    let displayCount = 12
-    let countries = data;
+    let displayCount = total;
+    let countries = countriesArray;
 
     /* 
     First checks if the length of the containers array is 0.
