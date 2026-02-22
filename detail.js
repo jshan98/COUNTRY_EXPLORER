@@ -1,5 +1,16 @@
 document.addEventListener("DOMContentLoaded", populateDetails);
 
+var backButton = document.getElementById("back-btn"); // Holds the back button element
+backButton.addEventListener("click", backButtonHandler); // adds the event listener for the back button element
+
+/**
+ * Function: backButtonHandler
+ * Description: Returns the user back to the main (index.html) page when called
+ */
+function backButtonHandler(){
+    window.location.href = "index.html";
+}
+
 /**
  * Function: populateDetails
  * Description: populates the details page elements by decoding the query string sent from the main page (index.html)
